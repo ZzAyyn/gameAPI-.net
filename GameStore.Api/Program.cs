@@ -55,5 +55,21 @@ app.MapPost("/games", (CreateGameDto newGame) =>
 
 // PUT /games/1
 
+app.MapPut("/games/{id}", (int id, UpdateGameDto updatedGame) =>
+{
+    // find index for the game where game.id is equal to the provided id parameter
+    var index = games.FindIndex(game => game.Id == id);
+
+    games[index] = new GameDto(
+        id,
+        updatedGame.Name,
+        updatedGame.Genre,
+        updatedGame.Price,
+        updatedGame.ReleaseDate
+    );
+
+    return Results.NoContent();
+});
+
 
 app.Run();

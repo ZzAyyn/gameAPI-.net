@@ -14,3 +14,14 @@ Content-Type: application/json
     "price": 59.99,
     "releaseDate": "2023-10-20"
 }
+
+###
+PUT http://localhost:5065/games/1
+Content-Type: application/json
+
+{
+    "name": "Forza Horizon 5",
+    "genre": "Racing",
+    "price": 49.99,
+    "releaseDate": "2021-11-09"
+}
