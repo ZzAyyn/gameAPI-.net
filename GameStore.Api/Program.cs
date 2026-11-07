@@ -35,7 +35,12 @@ app.MapGet("/games", () => games);
 
 
 // GET /games/1
-app.MapGet("/games/{id}", (int id) => games.Find(game => game.Id == id))
+app.MapGet("/games/{id}", (int id) =>
+{
+    var game = games.Find(game => game.Id == id);
+
+    return game is null ? Results.NotFound() : Results.Ok(game);
+})
     .WithName(GetGameEndpointName);
 
 // POST /games
@@ -59,6 +64,11 @@ app.MapPut("/games/{id}", (int id, UpdateGameDto updatedGame) =>
 {
     // find index for the game where game.id is equal to the provided id parameter
     var index = games.FindIndex(game => game.Id == id);
+
+    if (index == -1)
+    {
+        return Results.NotFound();
+    }
 
     games[index] = new GameDto(
         id,
